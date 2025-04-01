@@ -64,3 +64,8 @@ RMN_CollectiblePoemFragments.commandCollectibles = function() {
 };
 
 // Collectibles scene windows
+RMN_CollectiblePoemFragments.collectiblesDisplayWindow = function() {
+	this.initialize.apply(this, arguments);
+};
+RMN_CollectiblePoemFragments.collectiblesDisplayWindow.prototype = Object.create(Window_Selectable.prototype);
+RMN_CollectiblePoemFragments.collectiblesDisplayWindow.prototype.constructor = RMN_CollectiblePoemFragments.collectiblesDisplayWindow;
