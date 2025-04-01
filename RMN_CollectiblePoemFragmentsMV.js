@@ -34,15 +34,33 @@ RMN_CollectiblePoemFragments.hideUncollectedCollectibles = true;
 RMN_CollectiblePoemFragments.collectiblesScene = function() {
 	this.initialize.apply(this, arguments);
 };
-RMN_CollectiblePoemFragments.collectiblesScene.prototype = Object.create(Scene_Base.prototype);
+RMN_CollectiblePoemFragments.collectiblesScene.prototype = Object.create(Scene_MenuBase.prototype);
 RMN_CollectiblePoemFragments.collectiblesScene.prototype.constructor = RMN_CollectiblePoemFragments.collectiblesScene;
 
 RMN_CollectiblePoemFragments.collectiblesScene.prototype.initialize = function() {
-	Scene_Base.prototype.initialize.call(this);
+	Scene_MenuBase.prototype.initialize.call(this);
 };
 
 RMN_CollectiblePoemFragments.collectiblesScene.prototype.create = function() {
+	Scene_MenuBase.prototype.create.call(this);
+	this.createWindowLayer();
+};
 
+// Add command to navigate to collectibles scene
+RMN_CollectiblePoemFragments.Window_MenuCommand_addOriginalCommandsAlias = Window_MenuCommand.prototype.addOriginalCommands;
+Window_MenuCommand.prototype.addOriginalCommands = function() {
+	RMN_CollectiblePoemFragments.Window_MenuCommand_addOriginalCommandsAlias.call(this);
+	this.addCommand("Collectibles", "collectibles", true, null);
+};
+
+RMN_CollectiblePoemFragments.Scene_Menu_createCommandWindowAlias = Scene_Menu.prototype.createCommandWindow;
+Scene_Menu.prototype.createCommandWindow = function() {
+	RMN_CollectiblePoemFragments.Scene_Menu_createCommandWindowAlias.call(this);
+	this._commandWindow.setHandler("collectibles", RMN_CollectiblePoemFragments.commandCollectibles.bind(this));
+};
+
+RMN_CollectiblePoemFragments.commandCollectibles = function() {
+	SceneManager.push(RMN_CollectiblePoemFragments.collectiblesScene);
 };
 
 // Collectibles scene windows
